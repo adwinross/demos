@@ -23,7 +23,7 @@ print("=================================================")
 // Get class name
 let classNameChar = class_getName(type(of: person))
 let className = String(cString: classNameChar)
-print("Class Name: \(className) \(person)")
+print("Class Name: \(className)")
 print("=================================================")
 
 // Get size of the object in bytes
@@ -35,9 +35,11 @@ print("=================================================")
 var count: UInt32 = 0
 var ivars: UnsafeMutablePointer<Ivar> = class_copyIvarList(type(of: person), &count)!
 print("Property Names:")
+var ivarNames = [NSString]()
 for i in 0..<count {
-    let propertyName = NSString(cString: ivar_getName(ivars[Int(i)])!, encoding: NSUTF8StringEncoding)
-    print("\(i+1). \(String(describing: propertyName))")
+    let ivarName = NSString(cString: ivar_getName(ivars[Int(i)])!, encoding: NSUTF8StringEncoding)!
+    ivarNames.append(ivarName)
+    print("\(i+1). \(String(describing: ivarName))")
 }
 print("=================================================")
 
